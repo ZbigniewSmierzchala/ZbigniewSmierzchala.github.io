@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pivot | Strategy to AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b1120; /* Deep dark blue */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80; 
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --border-light: rgba(56, 189, 248, 0.2); /* Slight blue tint to border */
+        }
+
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* CANVAS BACKGROUND - FIXED */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* A subtle radial gradient to give depth behind the particles */
+            background: radial-gradient(circle at top, #1e293b 0%, #0b1120 100%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* --- TYPEWRITER HEADER --- */
+        .manifesto-header {
+            margin-bottom: 70px;
+            text-align: left; 
+        }
+
+        /* Container for the typing text */
+        .terminal-line {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.05);
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            overflow: hidden; /* Keeps cursor contained */
+        }
+
+        /* The typing animation logic */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+            border-right: 3px solid var(--accent-green); /* The Cursor */
+            width: 0; /* Start invisible */
+            animation: 
+                typing 3.5s steps(40, end) forwards, /* Type out in 3.5s */
+                blink .75s step-end infinite; /* Blink cursor forever */
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-green); }
+        }
+
+        /* Main Headlines */
+        .manifesto-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin: 0 0 25px 0;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-text {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 25px;
+            margin-top: 20px;
+        }
+
+        /* --- GRID LAYOUT --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-light);
+            padding: 35px;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            border-color: var(--accent-blue);
+        }
+
+        h2 { 
+            border-bottom: 1px solid var(--border-light); 
+            padding-bottom: 15px; 
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            font-size: 1.4rem;
+        }
+
+        ul { padding-left: 20px; color: var(--text-muted); }
+        li { margin-bottom: 10px; }
+        
+        strong { color: var(--text-main); font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .manifesto-header h1 { font-size: 2.2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .intro-text { font-size: 1.1rem; }
+            
+            /* Fix typing animation on small screens by allowing wrap if needed */
+            .typing-text { white-space: normal; border-right: none; animation: none; width: auto; }
+            .terminal-line { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- HEADER -->
+    <header class="manifesto-header">
+        
+        <!-- TYPING ANIMATION CONTAINER -->
+        <div class="terminal-line">
+            <span class="typing-text">> SYSTEM_STATUS: TRANSITIONING_TO_CODE...</span>
+        </div>
+        
+        <h1>
+            Legacy Strategy meets<br>
+            AI-Augmented Engineering.
+        </h1>
+        
+        <div class="intro-text">
+            <p>
+                <strong>The Reboot.</strong> After 30 years of IT Strategy at HP & Lenovo, I am updating my operating system.
+            </p>
+            <p>
+                I am leveraging AI to bridge the gap between "Senior Management" and <strong>"Citizen Developer."</strong> 
+                This site documents my journey using local LLMs to build the tools I used to only strategize about.
+            </p>
+        </div>
+    </header>
+
+    <!-- INPUT / OUTPUT CARDS -->
+    <div class="grid">
+        <div class="card">
+            <h2>The Legacy (Input)</h2>
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+                Decades of high-level context. Understanding <em>why</em> we build before <em>how</em> we build.
+            </p>
+            <ul>
+                <li><strong>Strategic Portfolio Mgmt</strong> (HP/Lenovo)</li>
+                <li><strong>Lean Six Sigma</strong> Optimization</li>
+                <li><strong>Global Operations</strong> (EMEA/WW)</li>
+                <li><strong>Competitive Intelligence</strong></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>The Future (Output)</h2>
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+                Using AI as a force multiplier to become a hands-on builder.
+            </p>
+            <ul>
+                <li><strong>Local AI Stack:</strong> Ollama, RAG, PrivateGPT</li>
+                <li><strong>Full Stack:</strong> Python, HTML/JS, PHP</li>
+                <li><strong>Infrastructure:</strong> Linux, Docker</li>
+                <li><strong>Data Privacy</strong> & Sovereignty</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- LOGS / PROJECTS -->
+    <h3 style="color: var(--text-main); margin-bottom: 20px;">Recent Deployments</h3>
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span style="color: var(--accent-blue); font-weight: bold; font-size: 1.1rem;">Chess Club Manager</span>
+            <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--accent-green); border: 1px solid var(--accent-green); padding: 2px 8px; border-radius: 4px;">LIVE</span>
+        </div>
+        <p style="color: var(--text-muted);">
+            A responsive web-app for local club management. 
+            <em>"I provided the logic; AI wrote the boilerplate."</em>
+        </p>
+    </div>
+
+</div>
+
+<!-- NEURAL NETWORK SCRIPT -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        // Increased particle count for better density
+        const particleCount = Math.floor(window.innerWidth / 10); 
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5, // Speed
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 1
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // VISIBLE BLUE COLOR
+        ctx.fillStyle = "rgba(56, 189, 248, 0.7)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Bounce off edges
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            // Draw particle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw connections
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                
+                // Draw line if close enough
+                if(dist < 130) {
+                    ctx.beginPath();
+                    // Fade out line based on distance
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.25 - dist/600})`; 
+                    ctx.lineWidth = 0.8;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+
+</body>
+</html>

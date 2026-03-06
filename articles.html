@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive | Strategy Logs</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-link"> <span style="text-decoration: underline; margin-left: 5px;"> > [RETURN_TO_MAIN_SYSTEM]</span></a>
+
+    <header class="archive-header">
+        <h1>Legacy Archive</h1>
+        <span class="archive-meta">> ACCESSING_DATA_BANKS... </span>
+        <p style="color: var(--text-muted); margin-top: 15px; max-width: 600px;">
+            A collection of my thoughts on Strategic Marketing, Business Process Improvements / Automation and Market Intelligence published on LinkedIn. 
+            These files represent the input data for my current evolution.
+        </p>
+    </header>
+
+    <!-- SHELF 1:  STRATEGIC MARKETING -->
+    <div class="shelf-section shelf-market">
+        <div class="shelf-label">/// SECTOR_01: STRATEGIC_MARKETING</div>
+        <div class="cabinet-rack">
+            <!-- ARTICLE 1 -->
+            <a href="https://www.linkedin.com/pulse/data-driven-dilemma-prioritizing-new-product-limited-data-zbigniew/?trackingId=FCTR%2BpMBQoernjNGW4SLXQ%3D%3D" target="_blank" class="data-tape">
+                <span class="tape-title">Prioritizing New Offerings with Limited Data and Time</span>
+                <span class="tape-meta">READ_ARTICLE ↗</span>
+            </a>
+            <!-- ARTICLE 2 -->
+            <a href="https://www.linkedin.com/pulse/revitalize-your-product-marketing-mix-fishbone-health-smierzchala-gwcce/?trackingId=FCTR%2BpMBQoernjNGW4SLXQ%3D%3D" target="_blank" class="data-tape">
+                <span class="tape-title">Revitalize Your Product Marketing Mix with the Fishbone Diagram Health Check</span>
+                <span class="tape-meta">READ_ARTICLE ↗</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- SHELF 2: STRATEGIC MARKETING -->
+    <div class="shelf-section shelf-strategy">
+        <div class="shelf-label">/// SECTOR_02: PROCESS_AUTOMATION</div>
+        <div class="cabinet-rack">
+            <a href="https://www.linkedin.com/pulse/enabling-automation-data-zbigniew-smierzchala/?trackingId=FCTR%2BpMBQoernjNGW4SLXQ%3D%3D" target="_blank" class="data-tape">
+                <span class="tape-title">Enabling Automation with Data (AI Capture and RPA</span>
+                <span class="tape-meta">READ_ARTICLE ↗</span>
+            </a>
+            <a href="https://www.linkedin.com/pulse/crossing-value-chasm-from-task-automation-holistic-smierzchala/?trackingId=FCTR%2BpMBQoernjNGW4SLXQ%3D%3D" target="_blank" class="data-tape">
+                <span class="tape-title">Crossing the value chasm: From task automation to holistic process automation</span>
+                <span class="tape-meta">READ_ARTICLE ↗</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- SHELF 3: IT TECHNOLOGY -->
+    <div class="shelf-section shelf-tech">
+        <div class="shelf-label">/// SECTOR_03: MARKET_INSIGHTS</div>
+        <div class="cabinet-rack">
+            <a href="https://www.linkedin.com/posts/zbigniew-smierzchala_why-it-makes-sense-to-bring-in-an-external-activity-7329070052039684096-IGL-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAABrC-cBDd8gOp5A4jSYMObPEuR5icHuy1I" target="_blank" class="data-tape">
+                <span class="tape-title">Why It Makes Sense to Bring in an External Analyst for Competitive Assessments</span>
+                <span class="tape-meta">READ_ARTICLE ↗</span>
+            </a>
+            <a href="https://www.linkedin.com/pulse/competitive-assessment-best-practice-honest-provide-smierzchala/?trackingId=FCTR%2BpMBQoernjNGW4SLXQ%3D%3D" target="_blank" class="data-tape">
+                <span class="tape-title">Competitive Assessment Best Practice - Be honest and provide proof points!</span>
+                <span class="tape-meta">READ_ARTICLE ↗</span>
+            </a>
+        </div>
+    </div>
+<div style="margin-top: 50px; padding-top: 20px; border-top: 1px dashed #334155; text-align: left;">
+    <a href="index.html" class="archive-meta" style="text-decoration: none; font-weight: bold; cursor: pointer;">
+        > [RETURN_TO_MAIN_SYSTEM]
+    </a>
+    <p style="color: #475569; font-size: 0.75rem; font-family: monospace; margin-top: 10px;">
+        STATUS: SESSION_SAVED | CONNECTION_IDLE...
+    </p>
+</div>
+</div>
+
+<!-- SAME BACKGROUND SCRIPT FOR CONTINUITY -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+
+<!-- === FOOTER (German Legal Standards) === -->
+<footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">../ZBIGNIEW SMIERZCHALA</span>. 
+            Hosted in Germany (ISO 27001).
+        </div>
+
+    </div>
+</footer>
+
+<!-- Auto-Update Year Script -->
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

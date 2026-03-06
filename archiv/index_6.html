@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategy to Code | The Pivot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* DEEPER DARK BLUE BACKGROUND */
+            --bg-color: #020617; 
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 80%);
+            
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            
+            /* NEON ACCENTS */
+            --neon-blue: #38bdf8;
+            --neon-green: #4ade80;
+            --neon-glow: 0 0 12px rgba(56, 189, 248, 0.4);
+            --neon-border: 0 0 8px rgba(56, 189, 248, 0.2);
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(15, 23, 42, 0.6);
+            --border-light: rgba(56, 189, 248, 0.15); 
+        }
+
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* CANVAS BACKGROUND */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-gradient);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* --- TYPEWRITER HEADER --- */
+        .manifesto-header { margin-bottom: 70px; text-align: left; }
+
+        .terminal-line {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-green);
+            background: rgba(74, 222, 128, 0.05);
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.1); /* Subtle green glow */
+        }
+
+        .manifesto-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin: 0 0 25px 0;
+            line-height: 1.1;
+            color: #fff;
+            /* NEON HEADER EFFECT */
+            text-shadow: var(--neon-glow);
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            border-left: 3px solid var(--neon-blue);
+            padding-left: 25px;
+            margin-top: 20px;
+            /* Light glow on the border line */
+            box-shadow: -5px 0 15px -5px rgba(56, 189, 248, 0.3);
+        }
+
+        /* --- CARDS & GRID --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-light);
+            padding: 35px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: var(--neon-border), 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        h2 { 
+            color: var(--neon-blue);
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            font-size: 1.4rem;
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+        }
+
+        ul { padding-left: 20px; color: var(--text-muted); }
+        li { margin-bottom: 10px; }
+        strong { color: var(--text-main); font-weight: 600; }
+
+        /* --- PROJECT LINKS / BUTTONS --- */
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
+        .project-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .status-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 0 5px rgba(74, 222, 128, 0.2);
+        }
+
+        .btn-terminal {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        .btn-terminal:hover {
+            background: var(--neon-blue);
+            color: #020617; /* Dark text on hover */
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        @media (max-width: 600px) {
+            .manifesto-header h1 { font-size: 2.2rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- HEADER -->
+    <header class="manifesto-header">
+        <div class="terminal-line">
+            > SYSTEM_STATUS: TRANSITIONING_TO_CODE...<span style="animation:blink 1s infinite">_</span>
+        </div>
+        
+        <h1>
+            Legacy Strategy meets<br>
+            AI-Augmented Engineering.
+        </h1>
+        
+        <div class="intro-text">
+            <p>
+                <strong>The Reboot.</strong> After 30 years of IT Strategy at HP & Lenovo, I am updating my operating system.
+            </p>
+            <p>
+                I am leveraging AI to bridge the gap between "Senior Management" and <strong>"Citizen Developer."</strong> 
+                This site documents my journey using AI to become a "Citizen Developer."
+            </p>
+        </div>
+    </header>
+
+    <!-- INPUT / OUTPUT GRID -->
+    <div class="grid">
+        <div class="card">
+            <h2>INPUT: The Legacy</h2>
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+                Decades of high-level context. Understanding <em>why</em> we build before <em>how</em> we build.
+            </p>
+            <ul>
+                <li><strong>Strategic Portfolio Mgmt</strong> (HP/Lenovo)</li>
+                <li><strong>Lean Six Sigma</strong> Optimization</li>
+                <li><strong>Global Operations</strong> (EMEA/WW)</li>
+                <li><strong>Competitive Intelligence</strong></li>
+            </ul>
+             <a href="articles.html" class="btn-terminal" style="margin-top: 15px;">
+        [ ACCESS_STRATEGY_LOGS ]
+    </a>
+</div>
+        </div>
+
+        <div class="card">
+            <h2>OUTPUT: The Future</h2>
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+                Using AI as a force multiplier to become a hands-on builder.
+            </p>
+            <ul>
+                <li><strong>Local AI Stack:</strong> Ollama, RAG, PrivateGPT</li>
+                <li><strong>Full Stack:</strong> Python, HTML/JS, PHP</li>
+                <li><strong>Infrastructure:</strong> Linux, Docker</li>
+                <li><strong>Data Privacy</strong> & Sovereignty</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NEW PROJECTS SECTION -->
+    <h3 style="color: var(--text-muted); font-family: 'JetBrains Mono'; margin-bottom: 25px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        // RECENT_DEPLOYMENTS
+    </h3>
+
+    <div class="grid">
+        <!-- PROJECT 1 -->
+        <div class="card">
+            <div class="project-header">
+                <span class="project-title">♟️ Chess Club Manager</span>
+                <span class="status-tag">LIVE</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                A responsive web-app for local club management. Handling member data, ELO ratings, and tournament pairings.
+                <br><br>
+                <em>"I provided the logic; AI wrote the boilerplate."</em>
+            </p>
+            <!-- REPLACE '#' WITH YOUR ACTUAL LINK -->
+            <a href="#" class="btn-terminal">[ ACCESS_APP ]</a>
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="card">
+            <div class="project-header">
+                <span class="project-title">🧠 Private AI Lab</span>
+                <span class="status-tag" style="color: #facc15; border-color: #facc15; box-shadow: 0 0 5px rgba(250, 204, 21, 0.2);">BETA</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                Self-hosted document analysis pipeline using <strong>Ollama</strong> and <strong>LangChain</strong>. 
+                Completely offline execution to ensure 100% data sovereignty for sensitive business docs.
+            </p>
+            <!-- REPLACE '#' WITH YOUR ACTUAL LINK -->
+            <a href="#" class="btn-terminal">[ VIEW_ARCHITECTURE ]</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- NEURAL NETWORK SCRIPT -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        const particleCount = Math.floor(window.innerWidth / 12); // Balance density
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                // SLOWER SPEED (0.15 instead of 0.5)
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // PARTICLES COLOR (Bright Blue)
+        ctx.fillStyle = "rgba(56, 189, 248, 0.8)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Soft Bounce off edges
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // CONNECTING LINES
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                
+                // Draw line if close enough
+                if(dist < 140) {
+                    ctx.beginPath();
+                    // Fade out line based on distance
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+
+<style>
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study | Event Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-link"> <span style="text-decoration: underline; margin-left: 5px;">RETURN_TO_MAIN_SYSTEM</span></a>
+   
+    
+
+    <header class="archive-header">
+        <h1>EVENT_PLANNER_V0001</h1>
+        <span class="archive-meta"></span>
+        </header>
+<main>
+
+<div class="card">
+    <div class="card-content">
+        <h2>01_STRATEGY_ANALYSIS</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; font-family: monospace; margin-bottom: 20px;">
+            // DEPRECATING_EXCEL_LEGACY...
+        </p>
+        <div style="margin-bottom: 15px; line-height: 1.5;">
+            <strong>The Challenge:</strong> 
+            Standard enterprise software was too rigid for local administrative workflows. Users were stuck in "Excel-Hell," losing data structure and institutional knowledge.
+        </div>
+        <ul style="line-height: 1.6; list-style-type: '> ';">
+            <li>FLEXIBILITY: User-defined milestones & team roles.</li>
+            <li>KNOWLEDGE_MGMT: Reusable blueprints for annual cycles.</li>
+            <li>DATA_SOVEREIGNTY: 100% Local-First deployment.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>02_SYSTEM_ARCHITECTURE</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; font-family: monospace; margin-bottom: 20px;">
+            // EXECUTING_BUILD_STACK...
+        </p>
+
+        
+
+        <ul style="margin-top: 15px; line-height: 1.6; list-style-type: '> ';">
+            <li>FRONTEND: Vanilla JS (ES6+), HTML5, CSS3. Zero dependencies.</li>
+            <li>STORAGE: LocalStorage + JSON-Mirroring for audit-ready data.</li>
+            <li>INFRASTRUCTURE: Docker containerization on Ubuntu (Portainer).</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>03_DEPLOYMENT_IMPACT</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; font-family: monospace; margin-bottom: 20px;">
+            // MEASURING_SYSTEM_EFFICIENCY...
+        </p>
+        <p style="line-height: 1.5; margin-bottom: 15px;">
+            The project confirms that AI-assisted "Citizen Development" can replace outdated administrative bottlenecks with custom, secure logic.
+        </p>
+        <ul style="line-height: 1.6; list-style-type: '> ';">
+            <li>PERFORMANCE: 30% reduction in planning time for recurring events.</li>
+            <li>UX_ADOPTION: Zero-training interface for non-technical staff.</li>
+            <li>SCALABILITY: Modular code-base ready for department-wide rollout.</li>
+        </ul>
+    </div>
+</div>
+</main>
+
+
+<!-- SAME BACKGROUND SCRIPT FOR CONTINUITY -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+<!-- === FOOTER (German Legal Standards) === -->
+<footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">ZBIGNIEW SMIERZCHALA</span>. 
+            Hosted in Germany (ISO 27001).
+        </div>
+
+    </div>
+</footer>
+
+<!-- Auto-Update Year Script -->
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<div style="margin-top: 50px; padding-top: 20px; border-top: 1px dashed #334155; text-align: left;">
+    <a href="index.html" class="archive-meta" style="text-decoration: none; font-weight: bold; cursor: pointer;">
+        > [RETURN_TO_MAIN_SYSTEM]
+    </a>
+    <p style="color: #475569; font-size: 0.75rem; font-family: monospace; margin-top: 10px;">
+        STATUS: SESSION_SAVED | CONNECTION_IDLE...
+    </p>
+</div>
+</body>
+</html>

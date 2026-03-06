@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study | Event Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-link"> <span style="text-decoration: underline; margin-left: 5px;">RETURN_TO_MAIN_SYSTEM</span></a>
+
+    <header class="archive-header">
+        <h1>EVENT_PLANNER_V0001</h1>
+        <span class="archive-meta"></span>
+        </header>
+<main>
+
+<div class="card">
+    <div class="card-content">
+        <h2>01_CASE STUDY: Event_Planner</h2>
+        <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+            Transitioning from rigid Excel sheets to a tailor-made web application.
+        </p>
+        <div style="margin-bottom: 15px; line-height: 1.5;">
+            <strong>The Challenge:</strong> 
+            Standard software was either too complex or too inflexible for the specific administrative processes of a German local authority. The goal was to build a tool that adapts to the user—not the other way around.
+        </div>
+        <ul style="line-height: 1.6;">
+            <li><strong>User-Centric:</strong> Focused on the 20% of features that deliver 80% of the value.</li>
+            <li><strong>Data Sovereignty:</strong> 100% local storage to comply with strict privacy regulations.</li>
+            <li><strong>Sustainability:</strong> Capturing institutional knowledge for future event cycles.</li>
+        </ul>
+    </div>
+</div>
+<div style="display: flex; gap: 15px; margin-top: 20px; filter: grayscale(100%); opacity: 0.6;">
+    <span>HTML5</span> | <span>CSS3</span> | <span>JavaScript</span> | <span>PHP</span> | <span>Docker</span> | <span>Ubuntu Server</span>
+</div>
+<div class="card">
+    <div class="card-content">
+        <h2>02_SYSTEM_ARCHITECTURE: Local-First Design</h2>
+        <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+            A lean, secure, and maintenance-free stack built for reliability.
+        </p>
+
+        
+        <ul style="margin-top: 15px; line-height: 1.6;">
+            <li><strong>Frontend Stack:</strong> Vanilla JavaScript (ES6+), HTML5 & CSS3. No external libraries, ensuring high performance and zero-dependency maintenance.</li>
+            <li><strong>Data Security:</strong> Persistence via Browser LocalStorage, featuring an intelligent change-tracking system and safety prompts.</li>
+            <li><strong>Infrastructure:</strong> Optimized as a portable web app, ready for deployment via <strong>Docker & Portainer</strong> on Ubuntu servers.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>03_DEPLOYMENT_IMPACT</h2>
+        <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+            Boosting efficiency through intelligent user guidance.
+        </p>
+        <p style="line-height: 1.5; margin-bottom: 15px;">
+            Designed to reduce human error and keep process ownership within the team.
+        </p>
+        <ul style="line-height: 1.6;">
+            <li><strong>Local & Secure:</strong> Privacy by design—no data ever leaves the local environment.</li>
+            <li><strong>Deadline Alerts (Fristen-Warnung):</strong> Built-in visual cues for overdue tasks and milestones.</li>
+            <li><strong>Experience Templates:</strong> Leverage successful events as "Blueprints" for the following year to prevent data bloat.</li>
+            <li><strong>Error Tolerance:</strong> Safety confirmations to prevent the accidental deletion of critical project phases.</li>
+        </ul>
+    </div>
+</div>
+
+
+</main>
+
+<!-- SAME BACKGROUND SCRIPT FOR CONTINUITY -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+<div style="margin-top: 50px; padding-top: 20px; border-top: 1px dashed #334155; text-align: left;">
+    <a href="index.html" class="archive-meta" style="text-decoration: none; font-weight: bold; cursor: pointer;">
+        > [RETURN_TO_MAIN_SYSTEM]
+    </a>
+    <p style="color: #475569; font-size: 0.75rem; font-family: monospace; margin-top: 10px;">
+        STATUS: SESSION_SAVED | CONNECTION_IDLE...
+    </p>
+</div>
+<!-- === FOOTER (German Legal Standards) === -->
+<footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">ZBIGNIEW SMIERZCHALA</span>. 
+            Hosted in Germany (ISO 27001).
+        </div>
+
+    </div>
+</footer>
+
+<!-- Auto-Update Year Script -->
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

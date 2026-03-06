@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dein Name | Strategist & Developer</title>
+    <style>
+        :root {
+            --bg-color: #0b1120; /* Etwas dunkler für besseren Kontrast zum Netz */
+            --card-bg: rgba(30, 41, 59, 0.8); /* Leicht transparent, um Netz durchscheinen zu lassen */
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --accent: #38bdf8;
+            --accent-green: #22c55e;
+            --border: #334155;
+        }
+
+        /* CANVAS HINTERGRUND */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Hinter den Content legen */
+            background-color: var(--bg-color);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADER & CARDS (Transparentes Glas-Design) */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 40px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+        }
+
+        .legacy-badge {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h2 { border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 40px; }
+        h3 { color: var(--accent); margin-top: 0; }
+        ul { list-style: none; padding: 0; color: var(--text-dim); }
+        li::before { content: "•"; color: var(--accent); margin-right: 8px; }
+
+        @media (max-width: 600px) {
+            header { flex-direction: column; text-align: center; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    <header>
+        <img src="dein-bild.jpg" alt="Profilbild" class="profile-img">
+        <div class="hero-text">
+            <h1>Dein Name</h1>
+            <p class="tagline" style="color: var(--accent); font-weight: bold;">Strategy Veteran & AI Systems Architect</p>
+            <p style="color: var(--text-dim); margin: 0;">25 years of IT excellence at HP & Lenovo | Transitioning to AI-driven Development.</p>
+        </div>
+    </header>
+
+    <div class="grid">
+        <div class="card">
+            <span class="legacy-badge">Business Strategy</span>
+            <h3>Management Legacy</h3>
+            <ul>
+                <li>Strategic Portfolio Management</li>
+                <li>Competitive Intelligence (WW/EMEA)</li>
+                <li>Lean Six Sigma Green Belt</li>
+            </ul>
+        </div>
+        <div class="card">
+            <span class="legacy-badge" style="color: var(--accent-green);">Technology</span>
+            <h3>Modern Stack</h3>
+            <ul>
+                <li>Local AI (Ollama, RAG Systems)</li>
+                <li>Full-Stack (PHP, JS, HTML/CSS)</li>
+                <li>Linux Server & Docker Admin</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Featured Projects</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Chess Club Web-App</h3>
+            <p style="font-size: 0.9rem; color: var(--text-dim);">Responsive platform built for local clubs.</p>
+            <a href="#" style="color: var(--accent); text-decoration: none; font-weight: bold;">View Live ↗</a>
+        </div>
+        <div class="card">
+            <h3>Self-Hosted AI Lab</h3>
+            <p style="font-size: 0.9rem; color: var(--text-dim);">Automated document analysis via local LLM.</p>
+            <a href="#" style="color: var(--accent); text-decoration: none; font-weight: bold;">Architecture ↗</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // NEURAL NETWORK BACKGROUND SCRIPT
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 80; i++) { // Anzahl der Neuronen
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.5)";
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.1)";
+
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if (dist < 150) { // Verbindungsdistanz
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+
+</body>
+</html>

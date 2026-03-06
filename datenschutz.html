@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive | Strategy Logs</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-link">< <span style="text-decoration: underline; margin-left: 5px;">RETURN_TO_MAIN_SYSTEM</span></a>
+
+    <header class="archive-header">
+        <h1>DATENSCHUTZ</h1>
+        <span class="archive-meta">> ACCESSING_DATA_BANKS... DATENSCHUTZ</span>
+        </header>
+<main>
+    <h1>Datenschutzerklärung</h1>
+
+    <nav>
+        <h2>Inhaltsverzeichnis</h2>
+        <ul>
+            <li><a href="#verantwortlicher">Verantwortlicher</a></li>
+            <li><a href="#zweck">Zweck der Website</a></li>
+            <li><a href="#keine-datenerhebung">Keine aktive Datenerhebung</a></li>
+            <li><a href="#keine-cookies">Keine Cookies und kein Tracking</a></li>
+            <li><a href="#hosting">Hosting über GitHub</a></li>
+            <li><a href="#externe-links">Externe Links</a></li>
+            <li><a href="#rechte">Rechte der betroffenen Personen</a></li>
+            <li><a href="#stand">Stand</a></li>
+        </ul>
+    </nav>
+
+    <section id="verantwortlicher">
+        <h2>1. Verantwortlicher</h2>
+        <p>
+            Verantwortlich für diese Website im Sinne der Datenschutz-Grundverordnung (DSGVO):
+        </p>
+        <p>
+            Name: Zbigniew Smierzchala<br>
+            <br>
+            Kontakt:
+             <a href="https://www.linkedin.com/in/zbigniew-smierzchala/" target="_blank" class="nav-btn-linkedin">
+      <span>Klicken auf diese Fläche für Kontaktdaten</span> ↗
+  </a>
+        </p>
+    </section>
+
+    <section id="zweck">
+        <h2>2. Zweck der Website</h2>
+        <p>
+            Diese Website dient ausschließlich der Bereitstellung von Informationen
+            über mich als Privatperson. Es werden keine interaktiven Funktionen angeboten.
+        </p>
+    </section>
+
+    <section id="keine-datenerhebung">
+        <h2>3. Keine aktive Datenerhebung</h2>
+        <p>
+            Über diese Website werden keine personenbezogenen Daten aktiv erhoben.
+        </p>
+        <ul>
+            <li>Keine Kontaktformulare</li>
+            <li>Keine Nutzerkonten</li>
+            <li>Kein Newsletter</li>
+            <li>Keine Kommentarfunktion</li>
+            <li>Keine Analyse- oder Tracking-Dienste</li>
+        </ul>
+    </section>
+
+    <section id="keine-cookies">
+        <h2>4. Keine Cookies und kein Tracking</h2>
+        <p>
+            Diese Website verwendet keine Cookies, keine Tracking-Technologien
+            und keine Analyse-Tools. Es erfolgt keine Auswertung des Nutzerverhaltens.
+        </p>
+    </section>
+
+    <section id="hosting">
+        <h2>5. Hosting über GitHub</h2>
+        <p>
+            Diese Website wird über GitHub bereitgestellt.
+            Beim Aufruf der Website verarbeitet der Hosting-Anbieter
+            technisch erforderliche Daten in eigener Verantwortung.
+        </p>
+        <p>
+            Dies kann insbesondere folgende Daten umfassen:
+        </p>
+        <ul>
+            <li>IP-Adresse</li>
+            <li>Datum und Uhrzeit des Zugriffs</li>
+            <li>Browsertyp und Betriebssystem</li>
+            <li>Aufgerufene Seiten</li>
+            <li>Referrer-URL</li>
+        </ul>
+        <p>
+            Die Verarbeitung erfolgt zur technischen Bereitstellung und Sicherheit
+            der Website.
+        </p>
+    </section>
+
+    <section id="externe-links">
+        <h2>6. Externe Links</h2>
+        <p>
+            Diese Website kann Links zu externen Websites enthalten.
+            Für deren Inhalte und datenschutzrechtliche Praxis
+            wird keine Verantwortung übernommen.
+        </p>
+    </section>
+
+    <section id="rechte">
+        <h2>7. Rechte der betroffenen Personen</h2>
+        <p>
+            Sofern personenbezogene Daten verarbeitet werden,
+            stehen Ihnen folgende Rechte nach der DSGVO zu:
+        </p>
+        <ul>
+            <li>Auskunft</li>
+            <li>Berichtigung</li>
+            <li>Löschung</li>
+            <li>Einschränkung der Verarbeitung</li>
+            <li>Widerspruch gegen die Verarbeitung</li>
+            <li>Beschwerde bei einer Aufsichtsbehörde</li>
+        </ul>
+        <p>
+            Da über diese Website keine aktive Datenerhebung erfolgt, beschränkt sich eine mögliche Verarbeitung auf technisch
+            notwendige Daten durch den Hosting-Anbieter.
+        </p>
+    </section>
+
+    <section id="stand">
+        <h2>8. Stand</h2>
+        <p>
+            Stand: März 2026
+        </p>
+    </section>
+
+</main>
+
+<!-- SAME BACKGROUND SCRIPT FOR CONTINUITY -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+<!-- === FOOTER (German Legal Standards) === -->
+<footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">ZBIGNIEW SMIERZCHALA</span>. 
+            Hosted in Germany (ISO 27001).
+        </div>
+
+    </div>
+</footer>
+
+<!-- Auto-Update Year Script -->
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

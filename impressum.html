@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>_IMPRESSUM</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<div class="container">
+    
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-link">< <span style="text-decoration: underline; margin-left: 5px;">RETURN_TO_MAIN_SYSTEM</span></a>
+
+    <header class="archive-header">
+        <h1>IMPRESSUM</h1>
+        <span class="archive-meta">> ACCESSING_DATA_BANKS...IMPRESSUM</span>
+        </header>
+
+<body>
+  <h2>Angaben gemäß § 5 TMG</h2>
+  <p>
+    Zbigniew Smierzchala<br>
+    Deutschland
+  </p>
+
+  <h2>Kontakt</h2>  <a href="https://www.linkedin.com/in/zbigniew-smierzchala/" target="_blank" class="nav-btn-linkedin">
+      <span>Klicken auf diese Fläche für Kontaktdaten</span> ↗
+  </a>
+  <br>
+  <br>
+<!-- <p>
+    Telefon: 01234 / 567890<br>
+    E-Mail: <a href="mailto:zsmi@zsmi.eu">zsmi@zsmi.eu</a>
+  </p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p>
+    Max Mustermann<br>
+    Anschrift wie oben
+  </p>
+ -->
+  <h2>Haftung für Inhalte</h2>
+  <p>
+    Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die
+    Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch
+    keine Gewähr übernehmen.
+  </p>
+
+  <h2>Haftung für Links</h2>
+  <p>
+    Diese Website enthält Links zu externen Webseiten Dritter, auf deren Inhalte
+    wir keinen Einfluss haben. Für diese fremden Inhalte übernehmen wir keine
+    Gewähr. Für die Inhalte der verlinkten Seiten ist stets der jeweilige
+    Anbieter oder Betreiber der Seiten verantwortlich.
+  </p>
+
+  <h2>Urheberrecht</h2>
+  <p>
+    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten
+    unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung,
+    Verbreitung und jede Art der Verwertung außerhalb der Grenzen des
+    Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors
+    bzw. Erstellers.
+  </p>
+</body>
+    
+
+<!-- SAME BACKGROUND SCRIPT FOR CONTINUITY -->
+<script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles = [];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+<!-- === FOOTER (German Legal Standards) === -->
+<footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">Zbigniew Smierzchala</span>. 
+            Hosted in Germany (ISO 27001).
+        </div>
+
+    </div>
+</footer>
+
+<!-- Auto-Update Year Script -->
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
