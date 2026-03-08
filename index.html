@@ -228,17 +228,33 @@
         <!-- Copyright & Hosting Info -->
         <div class="footer-copy">
             &copy; <span id="year"></span> <span style="color: var(--text-main);">../ZBIGNIEW_SMIERZCHALA</span>. 
-            Hosted in Germany (ISO 27001).
+            Hosted on GitHub Pages.
         </div>
+        <br>
+        
+<!-- HTML für den Counter -->
+<span id="stats-display" style="font-family: 'JetBrains Mono'; color: var(--neon-blue);">
+    VISITOR_COUNT: <span id="count-value">LOADING...</span>
+</span>
 
+<!-- SCRIPT zum Laden der Zahl -->
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        // Hier wird die Zahl in das HTML geschrieben
+        document.querySelector('#count-value').innerText = JSON.parse(this.responseText).count;
+    });
+    // Ersetze 'DEIN-CODE' wieder mit deinem GoatCounter-Namen
+    r.open('GET', 'https://zsmi.goatcounter.com/counter/index.json');
+    r.send();
+</script>
     </div>
+    
 </footer>
 
 <!-- Auto-Update Year Script -->
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-<!-- Invisible Visitor Counter -->
-<img src="count_visitor.php" alt="" style="display:none; width:0; height:0;">
 </body>
 </html>
