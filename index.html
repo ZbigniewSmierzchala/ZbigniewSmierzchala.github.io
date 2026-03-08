@@ -233,45 +233,53 @@
         <br>
        
     </div>
-    <!-- 1. DER TRACKING CODE (Unsichtbar) -->
-<!-- WICHTIG: Ersetze 'fake' durch deinen echten GoatCounter-Namen -->
+   <!-- === GOATCOUNTER VISITOR DISPLAY === -->
+
+<!-- 1. TRACKING (Unsichtbar) -->
+<!-- Ersetze 'DEIN_CODE' durch deinen GoatCounter-Namen -->
 <script data-goatcounter="https://zsmi.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 
-
-<!-- 2. DIE ANZEIGE (Sichtbar im Terminal-Style) -->
-<div class="visitor-display" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); margin-top: 15px;">
-    <span style="color: var(--neon-blue);">></span> SYSTEM_VISITS: 
-    <span id="stats-number" style="color: var(--neon-green); text-shadow: 0 0 5px rgba(74, 222, 128, 0.4);">LOADING...</span>
+<!-- 2. ANZEIGE (Zentriert & Neon) -->
+<div class="visitor-container" style="text-align: center; margin-top: 15px; padding-bottom: 20px;">
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); background: rgba(15, 23, 42, 0.5); padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border-light);">
+        <span style="color: var(--neon-blue); margin-right: 5px;">></span>
+        SYSTEM_VISITS: 
+        <span id="stats-number" style="color: var(--neon-green); font-weight: bold; margin-left: 5px;">CONNECTING...</span>
+    </span>
 </div>
 
-
-<!-- 3. DAS SKRIPT ZUM ABRUFEN DER ZAHL -->
+<!-- 3. LOGIC SCRIPT -->
 <script>
-    // WICHTIG: Ersetze 'fake' hier AUCH durch deinen echten Namen
-    var goatUser = 'zsmi'; 
-    
-    // Wir holen die Zahl für die Startseite ("/")
+    // --- KONFIGURATION ---
+    var goatUser = 'zsmi'; // Hier DEINEN Namen eintragen (z.B. 'jens-strategy')
+    // ---------------------
+
+    // Wir fragen die Statistik für die Startseite ('/') ab
     var requestUrl = 'https://' + goatUser + '.goatcounter.com/counter//.json';
 
-    var r = new XMLHttpRequest();
-    r.open('GET', requestUrl, true);
-
-    r.onload = function() {
-        if (r.status >= 200 && r.status < 400) {
-            var data = JSON.parse(r.responseText);
-            // Formatiert die Zahl (z.B. 1.200 statt 1200)
-            document.getElementById('stats-number').innerText = new Intl.NumberFormat('de-DE').format(data.count);
-        } else {
-            document.getElementById('stats-number').innerText = "OFFLINE";
-        }
-    };
-
-    r.onerror = function() {
-        document.getElementById('stats-number').innerText = "ERR_CONN";
-    };
-
-    r.send();
+    fetch(requestUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Privat oder Falsche URL");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Zahl formatieren (z.B. 1.050 statt 1050)
+            var count = new Intl.NumberFormat('de-DE').format(data.count);
+            // Zahl in die Seite schreiben
+            var el = document.getElementById('stats-number');
+            el.innerText = count;
+            // Kleiner Glow-Effekt wenn geladen
+            el.style.textShadow = "0 0 8px rgba(74, 222, 128, 0.6)";
+        })
+        .catch(error => {
+            console.error("GoatCounter Error:", error);
+            // Falls es fehlschlägt (z.B. AdBlocker oder Settings privat)
+            document.getElementById('stats-number').innerText = "N/A";
+            document.getElementById('stats-number').style.color = "#ef4444"; // Rot bei Fehler
+        });
 </script>
 </footer>
 
