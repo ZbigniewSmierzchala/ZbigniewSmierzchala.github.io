@@ -231,32 +231,53 @@
             Hosted on GitHub Pages.
         </div>
         <br>
-        
-<!-- HTML für den Counter -->
-<span id="stats-display" style="font-family: 'JetBrains Mono'; color: var(--neon-blue);">
-    VISITOR_COUNT: <span id="count-value">LOADING...</span>
-</span>
+       
+    </div>
+    <!-- 1. DER TRACKING CODE (Unsichtbar) -->
+<!-- WICHTIG: Ersetze 'fake' durch deinen echten GoatCounter-Namen -->
+<script data-goatcounter="https://zsmi.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 
-<!-- SCRIPT zum Laden der Zahl -->
+
+<!-- 2. DIE ANZEIGE (Sichtbar im Terminal-Style) -->
+<div class="visitor-display" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); margin-top: 15px;">
+    <span style="color: var(--neon-blue);">></span> SYSTEM_VISITS: 
+    <span id="stats-number" style="color: var(--neon-green); text-shadow: 0 0 5px rgba(74, 222, 128, 0.4);">LOADING...</span>
+</div>
+
+
+<!-- 3. DAS SKRIPT ZUM ABRUFEN DER ZAHL -->
 <script>
+    // WICHTIG: Ersetze 'fake' hier AUCH durch deinen echten Namen
+    var goatUser = 'zsmi'; 
+    
+    // Wir holen die Zahl für die Startseite ("/")
+    var requestUrl = 'https://' + goatUser + '.goatcounter.com/counter//.json';
+
     var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        // Hier wird die Zahl in das HTML geschrieben
-        document.querySelector('#count-value').innerText = JSON.parse(this.responseText).count;
-    });
-    // Ersetze 'DEIN-CODE' wieder mit deinem GoatCounter-Namen
-    r.open('GET', 'https://zsmi.goatcounter.com/counter/index.json');
+    r.open('GET', requestUrl, true);
+
+    r.onload = function() {
+        if (r.status >= 200 && r.status < 400) {
+            var data = JSON.parse(r.responseText);
+            // Formatiert die Zahl (z.B. 1.200 statt 1200)
+            document.getElementById('stats-number').innerText = new Intl.NumberFormat('de-DE').format(data.count);
+        } else {
+            document.getElementById('stats-number').innerText = "OFFLINE";
+        }
+    };
+
+    r.onerror = function() {
+        document.getElementById('stats-number').innerText = "ERR_CONN";
+    };
+
     r.send();
 </script>
-    </div>
-    
 </footer>
 
 <!-- Auto-Update Year Script -->
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-<script data-goatcounter="https://zsmi.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
