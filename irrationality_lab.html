@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Irrationality Lab | Deployment #2</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2338bdf8%22>_</text></svg>">
+    
+    <!-- Spezifisches CSS für das Terminal/Log Design -->
+    <style>
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 0.8; }
+
+        /* CI/CD Log Style List */
+        .log-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .log-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--neon-blue);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            transition: transform 0.2s, background 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .log-item:hover {
+            transform: translateX(8px);
+            background: rgba(56, 189, 248, 0.05);
+            border-left-color: var(--neon-green);
+        }
+
+        .log-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--neon-blue);
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .log-title {
+            color: #fff;
+            font-weight: 700;
+            margin-right: 5px;
+        }
+
+        /* The Result Box */
+        .result-box {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(74, 222, 128, 0.05);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.1);
+        }
+
+        .result-box h3 {
+            color: var(--neon-green);
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<!-- === TOP NAVIGATION BAR === -->
+<nav class="navbar">
+ <div class="nav-container">
+        
+        <!-- LOGO (Top Left) -->
+        <a href="index.html" class="nav-logo">
+            <span style="color: var(--neon-blue)">&lt;</span>
+            ZBIGNIEW_SMIERZCHALA
+            <span style="color: var(--neon-blue)">/&gt;</span>
+        </a>
+
+        <!-- MENU LINKS (Top Right) -->
+        <ul class="nav-links">
+            <li><a href="index.html">_home</a></li>
+            <li><a href="articles.html">_legacy_archive</a></li>
+            
+            <!-- NEW NEWS BUTTON -->
+            <li><a href="deployments.html">_deployments</a></li>
+
+            <!-- LINKEDIN BUTTON -->
+            <li>
+                <a href="https://www.linkedin.com/in/zbigniew-smierzchala/" target="_blank" class="nav-btn-linkedin">
+                    <span>LI_PROFILE</span> ↗
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    
+    <!-- BACK BUTTON -->
+    <a href="deployments.html" class="back-link">< <span style="text-decoration: underline; margin-left: 5px;">RETURN_TO_DEPLOYMENTS</span></a>
+
+    <!-- HEADER -->
+    <header class="archive-header">
+        <h1>#2: The Irrationality Lab</h1>
+        <span class="archive-meta">> THE_FULL_STACK_LEAP // ACTIVE_DEPLOYMENT</span>
+        
+        <h2 style="color: #fff; font-size: 1.5rem; margin-top: 30px; margin-bottom: 10px; text-shadow: none;">
+            The Journey: From Static Strategy to Automated Infrastructure
+        </h2>
+    </header>
+
+    <!-- THE ARCHITECTURE LOGS (List of Achievements) -->
+    <ul class="log-list">
+        
+        <li class="log-item">
+            <span class="log-tag">[STACK_UPGRADE]</span>
+            <div><span class="log-title">Evolution of Tech:</span> <span style="color: var(--text-muted);">Transitioned from simple HTML to a high-performance React 19 application.</span></div>
+        </li>
+
+        <li class="log-item">
+            <span class="log-tag">[CORE_ENGINE]</span>
+            <div><span class="log-title">Interactive Logic:</span> <span style="color: var(--text-muted);">Engineered a complex state-driven engine to simulate 10 real-world cognitive bias scenarios.</span></div>
+        </li>
+
+        <li class="log-item">
+            <span class="log-tag">[UI_UX_DESIGN]</span>
+            <div><span class="log-title">Modern Aesthetics:</span> <span style="color: var(--text-muted);">Leveraged Tailwind CSS for responsive design and Motion for fluid, engaging UI animations.</span></div>
+        </li>
+
+        <li class="log-item">
+            <span class="log-tag">[ANALYTICS]</span>
+            <div><span class="log-title">Data-Driven:</span> <span style="color: var(--text-muted);">Integrated GoatCounter for privacy-respecting, real-time visitor analytics.</span></div>
+        </li>
+
+        <li class="log-item" style="border-left-color: #facc15;"> <!-- Yellow for Docker/DevOps transition -->
+            <span class="log-tag" style="color: #facc15;">[ENV_ISOLATION]</span>
+            <div><span class="log-title">Containerization:</span> <span style="color: var(--text-muted);">Wrapped the entire application in Docker, ensuring the "it works on my machine" experience translates perfectly to production.</span></div>
+        </li>
+
+        <li class="log-item" style="border-left-color: #facc15;">
+            <span class="log-tag" style="color: #facc15;">[IaC]</span>
+            <div><span class="log-title">Infrastructure as Code:</span> <span style="color: var(--text-muted);">Implemented a Docker-Compose stack to manage the web server and application lifecycle.</span></div>
+        </li>
+
+        <li class="log-item" style="border-left-color: #facc15;">
+            <span class="log-tag" style="color: #facc15;">[PIPELINE]</span>
+            <div><span class="log-title">Professional DevOps:</span> <span style="color: var(--text-muted);">Established a modern CI/CD workflow—deploying directly from GitHub to a local Ubuntu server via Portainer.</span></div>
+        </li>
+
+    </ul>
+
+    <!-- THE RESULT BLOCK -->
+    <div class="result-box">
+        <h3>> SYSTEM_STATUS: ONLINE & AUTOMATED</h3>
+        <p style="font-size: 1.15rem; color: #fff; margin: 0;">
+            <strong style="color: var(--neon-green);">The Result:</strong> A fully automated "Push-to-Deploy" system running on my own private hardware.
+        </p>
+    </div>
+
+    <!-- NAVIGATION BUTTON AT BOTTOM -->
+    <div style="text-align: center; margin-top: 50px;">
+        <a href="https://zbigniewsmierzchala.github.io/irrationality_app/" class="btn-terminal" style="font-size: 1rem; padding: 15px 30px;">
+            🚀 [ View_APP ]
+        </a>
+    </div>
+
+</div>
+
+<!-- === FOOTER === -->
+<footer class="footer">
+   <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">../ZBIGNIEW_SMIERZCHALA</span>. 
+            Hosted on GitHub Pages.
+        </div>
+        <br>
+       
+    </div>
+</footer>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // BACKGROUND SCRIPT
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles =[];
+
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    
+    function init() {
+        resize();
+        particles =[];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+
+</body>
+</html>

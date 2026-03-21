@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployments | System Overview</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2338bdf8%22>_</text></svg>">
+</head>
+<body>
+
+<!-- Hintergrund Animation -->
+<canvas id="network-canvas"></canvas>
+
+<!-- === TOP NAVIGATION BAR === -->
+<nav class="navbar">
+    <div class="nav-container">
+        <!-- LOGO (Top Left) -->
+        <a href="index.html" class="nav-logo">
+            <span style="color: var(--neon-blue)">&lt;</span>
+            ZBIGNIEW_SMIERZCHALA
+            <span style="color: var(--neon-blue)">/&gt;</span>
+        </a>
+       
+    <!-- MENU LINKS (Top Right) -->
+        <ul class="nav-links">
+            <li><a href="index.html">_home</a></li>
+            <li><a href="articles.html">_legacy_archive</a></li>
+            
+            <!-- NEW NEWS BUTTON -->
+            <li><a href="deployments.html">_deployments</a></li>
+
+            <!-- LINKEDIN BUTTON -->
+            <li>
+                <a href="https://www.linkedin.com/in/zbigniew-smierzchala/" target="_blank" class="nav-btn-linkedin">
+                    <span>LI_PROFILE</span> ↗
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    
+    <!-- HEADER -->
+    <header class="archive-header">
+        <h1>Active Deployments</h1>
+        <span class="archive-meta">> SYSTEM_REGISTRY // LISTING_PROJECTS...</span>
+        <p style="color: var(--text-muted); margin-top: 15px; max-width: 600px;">
+            Overview of my transition from strategic concepts to functional code. Here are the live environments and architectural logs of my full-stack projects.
+        </p>
+    </header>
+
+    <!-- GRID FÜR DIE PROJEKTE -->
+    <div class="grid">
+        
+        <!-- DEPLOYMENT #2: The Irrationality Lab -->
+        <div class="card" style="border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);">
+            <div class="card-content">
+                <div class="project-header">
+                    <span class="project-title" style="color: #fff;">#2: The Irrationality Lab</span>
+                    <span class="status-tag" style="color: var(--neon-green); border-color: var(--neon-green);">ACTIVE</span>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--neon-blue); margin-bottom: 15px;">
+                    // THE_FULL_STACK_LEAP
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    My latest deployment bridging the gap between behavioral economics and modern development. Exploring logic, human irrationality, and complex system architectures.
+                </p>
+            </div>
+            <!-- Ändere den Link zur Datei, in der der Text für das Lab steht -->
+            <a href="irrationality_lab.html" class="btn-terminal">[ ACCESS_LAB_LOGS ]</a>
+        </div>
+
+        <!-- DEPLOYMENT #1: Event Planner -->
+        <div class="card">
+            <div class="card-content">
+                <div class="project-header">
+                    <span class="project-title">#1: EVENT_PLANNER</span>
+                    <span class="status-tag" style="color: #94a3b8; border-color: #334155;">V0001</span>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">
+                    // INITIAL_BUILD
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    The first major milestone in transitioning to code. A functional application designed to manage, schedule, and organize events, showcasing fundamental architecture.
+                </p>
+            </div>
+            <!-- Hier ist der Link zu deiner bestehenden Event Planner Seite -->
+            <a href="event_planner.html" class="btn-terminal" style="color: var(--text-muted); border-color: #334155;">[ VIEW_LEGACY_BUILD ]</a>
+        </div>
+
+    </div>
+</div>
+
+<!-- === FOOTER === -->
+<footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Legal Links (Pflichtangaben) -->
+        <div class="footer-legal">
+            <a href="impressum.html">Impressum</a>
+            <span class="separator">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+
+        <!-- Copyright & Hosting Info -->
+        <div class="footer-copy">
+            &copy; <span id="year"></span> <span style="color: var(--text-main);">../ZBIGNIEW_SMIERZCHALA</span>. 
+            Hosted on GitHub Pages.
+        </div>
+        <br>
+       
+    </div>
+</footer>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // BACKGROUND SCRIPT
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles =[];
+
+    function resize() { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    }
+    
+    function init() {
+        resize();
+        particles =[];
+        const particleCount = Math.floor(window.innerWidth / 15);
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.15, 
+                vy: (Math.random() - 0.5) * 0.15,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(56, 189, 248, 0.4)"; 
+        
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; 
+                    ctx.lineWidth = 0.6;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+</script>
+
+</body>
+</html>
